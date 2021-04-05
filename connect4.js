@@ -82,7 +82,12 @@ const placeInTable=(y, x)=> {
   let token = document.createElement("div");
   token.setAttribute("class", `player${currPlayer} piece`);
   let destination = document.getElementById(`${y}-${x}`);
-  destination.append(token)
+  
+  destination.append(token);
+  setTimeout(()=>{
+    token.classList.toggle("drop")
+  },10)
+  
 
 }
 

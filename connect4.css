@@ -1,9 +1,50 @@
 /* game board table */
 
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  position: absolute;
+}
+
+h2 {
+  background-color: black;
+  display: inline;
+  color: white;
+  padding: 10px;
+  border-radius: 50px;
+  font-size: 3em;
+  padding-right: 40px;
+  border: solid 5px yellow;
+}
+
+h1 {
+  display: inline;
+  position: relative;
+  background-color: black;
+  color: red;
+  font-size: 6em;
+  margin-left: -40px;
+  padding-left: -35px;
+  top: 15px;
+  border-top: solid 5px yellow;
+  border-right: solid 5px yellow;
+  border-bottom: solid 5px yellow;
+  border-radius: 30% 0 0 30%
+}
+
 #board td {
   width: 50px;
   height: 50px;
-  border: solid 1px #666;
+  border: solid 10px darkgray;
+}
+
+td {
+  margin: -10px;
 }
 
 /* pieces are div within game table cells: draw as colored circles */
@@ -14,12 +55,14 @@
   width: 80%;
   height: 80%;
   border-radius: 50%;
+  transform: translateY(-70vh);
+  transition: all 0.55s ease-in;
 }
 
 /* TODO: make pieces red/blue,  depending on player 1/2 piece */
 
 .player1 {
-  background-color:yellow;
+  background-color: blue;
 }
 
 .player2 {
@@ -29,9 +72,38 @@
 /* column-top is table row of clickable areas for each column */
 
 #column-top td {
-  border: dashed 1px lightgray;
+  border: dashed 2px lightgray;
 }
 
 #column-top td:hover {
   background-color: gold;
+}
+
+#game {
+  position: relative;
+  top: 20vh;
+}
+
+.drop {
+  transform: translateY(00px);
+}
+
+
+/*Background By:Manuel Pintohttps://manuelpinto.in */
+body {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
