@@ -95,7 +95,10 @@ const placeInTable=(y, x)=> {
 
 function endGame(msg) {
   // TODO: pop up alert message
-  alert(msg)
+  setTimeout(()=>{
+    alert(msg)
+  },900)
+  
   
 }
 
@@ -119,6 +122,10 @@ function handleClick(evt) {
 
   // check for win
   if (checkForWin()) {
+    let winningDiv = document.createElement('div');
+    winningDiv.classList.add("winningDiv")
+    document.querySelector('.header').append(winningDiv)
+
     return endGame(`Player ${currPlayer} won!`);
   }
 
