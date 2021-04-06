@@ -1,12 +1,5 @@
 /* game board table */
 
-body {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-}
-
 .header {
   position: absolute;
   margin-top: 5vh;
@@ -26,16 +19,11 @@ h2 {
 h1 {
   display: inline;
   position: relative;
-  background-color: black;
   color: red;
   font-size: 6em;
-  margin-left: -40px;
+  margin-left: -50px;
   padding-left: -35px;
-  top: 15px;
-  border-top: solid 5px yellow;
-  border-right: solid 5px yellow;
-  border-bottom: solid 5px yellow;
-  border-radius: 30% 0 0 30%
+  top: 20px;
 }
 
 table {
@@ -49,8 +37,6 @@ table {
   border: solid 5px black;
   background-color: whitesmoke;
 }
-
-
 
 /* pieces are div within game table cells: draw as colored circles */
 
@@ -94,22 +80,26 @@ table {
   transform: translateY(00px);
 }
 
-.winningDiv{
-  position:fixed;
+.winningDiv {
+  position: fixed;
   background-color: transparent;
   min-width: 200%;
   min-height: 200%;
   z-index: 10;
-  margin:-600px;
+  margin: -600px;
 }
 
-/*Background By:Manuel Pintohttps://manuelpinto.in */
-
 body {
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab) #23a6d5;
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
+
+/*Background By:Manuel Pinto https://manuelpinto.in */
 
 @keyframes gradient {
   0% {
