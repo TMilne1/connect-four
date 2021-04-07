@@ -31,6 +31,12 @@ table {
   margin-top: 6vh;
 }
 
+#board {
+  background-color: yellow;
+  padding: 5px 10px 10px 10px;
+  border-radius: 15px;
+}
+
 #board td {
   width: 65px;
   height: 65px;
@@ -40,14 +46,6 @@ table {
   border-radius: 50%;
   ;
 }
-
-#board {
-  background-color: yellow;
-  padding: 5px 10px 10px 10px;
-  border-radius: 15px;
-}
-
-/* pieces are div within game table cells: draw as colored circles */
 
 .piece {
   /* TODO: make into circles */
@@ -59,10 +57,8 @@ table {
   transform: translateY(-70vh);
   transition: all 0.55s ease-in;
   margin: -2px;
-  border: solid 2px black;
+  border: solid 1px black;
 }
-
-/* TODO: make pieces red/blue,  depending on player 1/2 piece */
 
 .player1 {
   background-color: blue;
@@ -71,8 +67,6 @@ table {
 .player2 {
   background-color: red;
 }
-
-/* column-top is table row of clickable areas for each column */
 
 #column-top td {
   border: dashed 1px yellow;
@@ -95,13 +89,12 @@ table {
   transform: translateY(00px);
 }
 
-.winningDiv {
+.endGameDiv {
   position: fixed;
   background-color: transparent;
-  min-width: 200%;
-  min-height: 200%;
+  min-width: 100%;
+  min-height: 100%;
   z-index: 10;
-  margin: -600px;
 }
 
 body {
@@ -114,8 +107,6 @@ body {
   animation: gradient 15s ease infinite;
 }
 
-/*Background By:Manuel Pinto https://manuelpinto.in */
-
 @keyframes gradient {
   0% {
     background-position: 0% 50%;
@@ -126,4 +117,7 @@ body {
   100% {
     background-position: 0% 50%;
   }
+}
+.winning-chips{
+  opacity: 65%;
 }

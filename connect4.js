@@ -10,6 +10,7 @@ const HEIGHT = 6;
 
 let currPlayer = 1; // active player: 1 or 2
 let board = []; // array of rows, each row is array of cells  (board[y][x])
+let winningCells;
 
 
 /** makeBoard: create in-JS board structure:
@@ -123,8 +124,22 @@ function handleClick(evt) {
   // check for win
   if (checkForWin()) {
     let winningDiv = document.createElement('div');
-    winningDiv.classList.add("winningDiv")
-    document.querySelector('.header').append(winningDiv)
+    winningDiv.classList.add("endGameDiv")
+    document.querySelector('body').append(winningDiv)
+
+    let firstChip = document.getElementById(`${winningCells[0][0]}-${winningCells[0][1]}`)
+    let secondChip = document.getElementById(`${winningCells[1][0]}-${winningCells[1][1]}`)
+    let thirdChip = document.getElementById(`${winningCells[2][0]}-${winningCells[2][1]}`)
+    let forthChip = document.getElementById(`${winningCells[3][0]}-${winningCells[3][1]}`)
+    const blink = setInterval(() => {
+      firstChip.classList.toggle('winning-chips')
+      secondChip.classList.toggle('winning-chips')
+      thirdChip.classList.toggle('winning-chips')
+      forthChip.classList.toggle('winning-chips')
+
+    }, 500);
+
+
 
     return endGame(`Player ${currPlayer} won!`);
   }
@@ -167,7 +182,7 @@ const checkForWin=()=> {
     // Check four cells to see if they're all color of current player
     //  - cells: list of four (y, x) cells
     //  - returns true if all are legal coordinates & all match currPlayer
-
+    winningCells = cells
     return cells.every(
       ([y,x]) =>
         y >= 0 &&
@@ -194,8 +209,17 @@ const checkForWin=()=> {
       const diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
       const diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
 
-      if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
+      if (_win(horiz)) {
         return true;
+      }
+      else if (_win(vert)) {
+        return true
+      }
+      else if (_win(diagDR)) {
+        return true
+      }
+      else if (_win(diagDL)) {
+        return true
       }
     }
   }
