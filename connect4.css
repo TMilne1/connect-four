@@ -3,6 +3,7 @@
 .header {
   position: absolute;
   margin-top: 3vh;
+  min-width: max-content;
 }
 
 h2 {
@@ -29,6 +30,8 @@ h1 {
 table {
   border-collapse: separate;
   margin-top: 6vh;
+  min-width: max-content;
+  overflow: hidden;
 }
 
 #board {
@@ -55,7 +58,7 @@ table {
   justify-self: center;
   border-radius: 50%;
   transform: translateY(-70vh);
-  transition: all 0.55s ease-in;
+  transition: all 0.65s ease-in;
   margin: -2px;
   border: solid 1px black;
 }
@@ -95,6 +98,16 @@ table {
   min-width: 100%;
   min-height: 100%;
   z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.endGameButton{
+  width:300px;
+  height: auto;
+
+  font-size: 50px;
+  color: #23a6d5;
 }
 
 body {
@@ -118,6 +131,17 @@ body {
     background-position: 0% 50%;
   }
 }
-.winning-chips{
+
+.winning-chips {
   opacity: 65%;
+}
+
+.newGame {  
+    width: 350px;
+    height: 350px;
+    background: black;
+    position: absolute;
+    top: 25vh;
+    z-index: 2;
+  
 }

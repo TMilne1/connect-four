@@ -139,7 +139,13 @@ function handleClick(evt) {
 
     }, 500);
 
-
+    let restartButton = document.createElement('button');
+    restartButton.innerText = "RESTART"
+    restartButton.classList.add("endGameButton")
+    document.querySelector('.endGameDiv').append(restartButton);
+    restartButton.addEventListener('click',() => {
+      restart();
+    })
 
     return endGame(`Player ${currPlayer} won!`);
   }
@@ -164,8 +170,8 @@ function handleClick(evt) {
 
 /*
 check if any of the top row of slots remains unfilled. if any are unfilled 
-there game continues/ no tie. however if the for loop completes, that means all
-slots in top row are filled. Since wecheck for win is called prior that means
+the game continues/ no tie. however if the for loop completes, that means all
+slots in top row are filled. Since the check for a winner is called prior that means
 there arent any more available slots and noone has won - tie!
 */
 const checkForTie=()=>{
@@ -225,5 +231,25 @@ const checkForWin=()=> {
   }
 }
 
+const breakBoardDown =()=>{
+  let tr = document.querySelectorAll("tr"); // grab all table rows
+  let arr = new Array(tr)
+  for (item of arr[0]) {
+    item.remove()
+  }
+  board=[];
+}
+
+
+
+const restart=()=>{
+  breakBoardDown(); // completely break down old game and pieces
+  makeHtmlBoard(); // remake the visual board
+  makeBoard(); //reset array grid monitoring pieces on the board
+  document.querySelector(".endGameDiv").remove() // remove div shield stopping further play
+}
+
+//const startGame=()=>{
 makeBoard();
 makeHtmlBoard();
+//}
