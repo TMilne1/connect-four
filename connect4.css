@@ -6,7 +6,7 @@
   min-width: max-content;
 }
 
-h2 {
+.h2 {
   background-color: black;
   display: inline;
   color: white;
@@ -17,7 +17,7 @@ h2 {
   border: double 5px yellow;
 }
 
-h1 {
+.h1 {
   display: inline;
   position: relative;
   color: red;
@@ -84,12 +84,35 @@ table {
 
 #game {
   position: relative;
-  top: 20vh;
+  top: 22vh;
   max-height: fit-content;
 }
 
 .drop {
   transform: translateY(00px);
+}
+
+.currentPlayer {
+  /*
+  position: absolute;
+  top: 100px;
+  right: 100px;
+  width: 220px;
+  height: 200px;
+  min-width: 220px;
+  min-height: 200px;
+  word-wrap: normal;
+  font-family: 'Bubblegum Sans', cursive;
+  text-align: center;
+  */
+  margin: 10px;
+}
+
+.currentPlayerStatus {
+  font-family: 'Bubblegum Sans', cursive;
+  display: inline;
+  color: #23a6d5;
+  font-size: 2.5em;
 }
 
 .endGameDiv {
@@ -102,10 +125,10 @@ table {
   justify-content: center;
   align-items: center;
 }
-.endGameButton{
-  width:300px;
-  height: auto;
 
+.endGameButton {
+  width: 300px;
+  height: auto;
   font-size: 50px;
   color: #23a6d5;
 }
@@ -118,6 +141,8 @@ body {
   background: linear-gradient(-45deg, #547581, #af416b, #23a6d5, #23d5ab) #23a6d5;
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
+  min-height: 200px;
+  min-width: 1000px
 }
 
 @keyframes gradient {
@@ -136,12 +161,11 @@ body {
   opacity: 65%;
 }
 
-.newGame {  
-    width: 350px;
-    height: 350px;
-    background: black;
-    position: absolute;
-    top: 25vh;
-    z-index: 2;
-  
+.newGame {
+  width: 350px;
+  height: 350px;
+  background: black;
+  position: absolute;
+  top: 25vh;
+  z-index: 2;
 }

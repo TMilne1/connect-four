@@ -12,20 +12,49 @@ let currPlayer = 1; // active player: 1 or 2
 let board = []; // array of rows, each row is array of cells  (board[y][x])
 let winningCells;
 
+const upDatePlayer = (num) => {
+  if (document.getElementById("currentPlayer")) {
+    document.getElementById("currentPlayer").remove()
+  }
+  let playerDiv = document.createElement('div');
+  playerDiv.setAttribute("class", "currentPlayer")
+  playerDiv.setAttribute("id", "currentPlayer")
+
+  let header = document.querySelector(".header")
+
+  header.append(playerDiv)
+
+  let currPlayerStatus = document.createElement('h1');
+  currPlayerStatus.setAttribute("class", "currentPlayerStatus")
+
+  if (num == 1) {
+    currPlayerStatus.innerText = "PLAYER ONE's TURN"
+    currPlayerStatus.style.color = "blue"
+  } else {
+    currPlayerStatus.innerText = "PLAYER TWO's TURN"
+    currPlayerStatus.style.color = "red"
+  }
+
+  playerDiv.append(currPlayerStatus)
+
+
+
+}
+
 
 /** makeBoard: create in-JS board structure:
  *    board = array of rows, each row is array of cells  (board[y][x]) */
-const makeBoard=()=>{
+const makeBoard = () => {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
   board = new Array(HEIGHT) // can't use .fill(new Array(HEIGHT)), 
-  for(let i=0; i<HEIGHT; i++){
+  for (let i = 0; i < HEIGHT; i++) {
     board[i] = new Array(WIDTH)
   }
 }
 
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
-const makeHtmlBoard = ()=>{
+const makeHtmlBoard = () => {
   // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
   const htmlBoard = document.querySelector("#board");
 
@@ -64,31 +93,30 @@ const makeHtmlBoard = ()=>{
 }
 
 /** findSpotForCol: given column x, return top empty y (null if filled) */
-const findSpotForCol=(x)=>{
-  if(x>HEIGHT){return null}
+const findSpotForCol = (x) => {
+  if (x > HEIGHT) { return null }
   // TODO: write the real version of this, rather than always returning 0
-  
+
   let tableRows = document.querySelectorAll("#board tr");
-  for(let i = 0; HEIGHT-i>0; i++){
-    if(tableRows[HEIGHT - i].children[x].innerHTML==''){
-      return HEIGHT-i-1;
+  for (let i = 0; HEIGHT - i > 0; i++) {
+    if (tableRows[HEIGHT - i].children[x].innerHTML == '') {
+      return HEIGHT - i - 1;
     }
   }
   return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
-const placeInTable=(y, x)=> {
+const placeInTable = (y, x) => {
   // TODO: make a div and insert into correct table cell
   let token = document.createElement("div");
   token.setAttribute("class", `player${currPlayer} piece`);
   let destination = document.getElementById(`${y}-${x}`);
-  
+
   destination.append(token);
-  setTimeout(()=>{
+  setTimeout(() => {
     token.classList.toggle("drop")
-  },10)
-  
+  }, 10)
 
 }
 
@@ -96,11 +124,11 @@ const placeInTable=(y, x)=> {
 
 function endGame(msg) {
   // TODO: pop up alert message
-  setTimeout(()=>{
+  setTimeout(() => {
     alert(msg)
-  },900)
-  
-  
+  }, 900)
+
+
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -143,7 +171,7 @@ function handleClick(evt) {
     restartButton.innerText = "RESTART"
     restartButton.classList.add("endGameButton")
     document.querySelector('.endGameDiv').append(restartButton);
-    restartButton.addEventListener('click',() => {
+    restartButton.addEventListener('click', () => {
       restart();
     })
 
@@ -153,19 +181,20 @@ function handleClick(evt) {
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
   // don't actually have to check ALL cells, just cells in the top row
- if(checkForTie()){
-   return endGame(`it's a tie!`);
- }
+  if (checkForTie()) {
+    return endGame(`it's a tie!`);
+  }
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
   //We already have an alert set up for an invalid play, 
   //so if we reach this part in the function just need to focus on switching players
-  if(currPlayer==1){
-    currPlayer=2
-  }else{
-    currPlayer=1
+  if (currPlayer == 1) {
+    currPlayer = 2
+  } else {
+    currPlayer = 1
   }
+  upDatePlayer(currPlayer)
 }
 
 /*
@@ -174,23 +203,23 @@ the game continues/ no tie. however if the for loop completes, that means all
 slots in top row are filled. Since the check for a winner is called prior that means
 there arent any more available slots and noone has won - tie!
 */
-const checkForTie=()=>{
+const checkForTie = () => {
   for (let i = 1; i <= WIDTH; i++) {
-    if(board[0][WIDTH - i]==undefined){return false}
+    if (board[0][WIDTH - i] == undefined) { return false }
   }
   return true
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
 
-const checkForWin=()=> {
+const checkForWin = () => {
   function _win(cells) {
     // Check four cells to see if they're all color of current player
     //  - cells: list of four (y, x) cells
     //  - returns true if all are legal coordinates & all match currPlayer
     winningCells = cells
     return cells.every(
-      ([y,x]) =>
+      ([y, x]) =>
         y >= 0 &&
         y < HEIGHT &&
         x >= 0 &&
@@ -231,25 +260,24 @@ const checkForWin=()=> {
   }
 }
 
-const breakBoardDown =()=>{
+const breakBoardDown = () => {
   let tr = document.querySelectorAll("tr"); // grab all table rows
   let arr = new Array(tr)
   for (item of arr[0]) {
     item.remove()
   }
-  board=[];
+  board = [];
 }
 
 
 
-const restart=()=>{
+const restart = () => {
   breakBoardDown(); // completely break down old game and pieces
   makeHtmlBoard(); // remake the visual board
   makeBoard(); //reset array grid monitoring pieces on the board
   document.querySelector(".endGameDiv").remove() // remove div shield stopping further play
 }
 
-//const startGame=()=>{
 makeBoard();
 makeHtmlBoard();
-//}
+upDatePlayer(1)
