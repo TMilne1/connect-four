@@ -1,5 +1,4 @@
 /** Connect Four
- *
  * Player 1 and 2 alternate turns. On each turn, a piece is dropped down a
  * column until a player gets four-in-a-row (horiz, vert, or diag) or until
  * board fills (tie)
@@ -17,70 +16,42 @@ const upDatePlayer = (num) => {
     document.getElementById("currentPlayer").remove()
   }
   let playerDiv = document.createElement('div');
-  playerDiv.setAttribute("class", "currentPlayer")
-  playerDiv.setAttribute("id", "currentPlayer")
+  let header = document.querySelector(".header");
+  let currPlayerStatus = document.createElement('h1');
 
-  let header = document.querySelector(".header")
+  playerDiv.setAttribute("id", "currentPlayer")
+  currPlayerStatus.setAttribute("class", "currentPlayerStatus")
+  currPlayerStatus.innerText = `PLAYER ${currPlayer}'s TURN`
 
   header.append(playerDiv)
-
-  let currPlayerStatus = document.createElement('h1');
-  currPlayerStatus.setAttribute("class", "currentPlayerStatus")
-
-  if (num == 1) {
-    currPlayerStatus.innerText = "PLAYER ONE's TURN"
-    currPlayerStatus.style.color = "blue"
-  } else {
-    currPlayerStatus.innerText = "PLAYER TWO's TURN"
-    currPlayerStatus.style.color = "red"
-  }
-
   playerDiv.append(currPlayerStatus)
 
-
-
+  currPlayer == 1 ? currPlayerStatus.style.color = "blue" : currPlayerStatus.style.color = "red"
 }
 
 
-/** makeBoard: create in-JS board structure:
- *    board = array of rows, each row is array of cells  (board[y][x]) */
 const makeBoard = () => {
-  // TODO: set "board" to empty HEIGHT x WIDTH matrix array
-  board = new Array(HEIGHT) // can't use .fill(new Array(HEIGHT)), 
   for (let i = 0; i < HEIGHT; i++) {
-    board[i] = new Array(WIDTH)
+    board.push(new Array(WIDTH));
   }
 }
-
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
 const makeHtmlBoard = () => {
-  // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
   const htmlBoard = document.querySelector("#board");
 
-  // TODO: add comment for this code
-  //create a table row element , give it an id of comlumn-top and add a click event listener
   const top = document.createElement("tr");
   top.setAttribute("id", "column-top");
   top.addEventListener("click", handleClick);
 
-  // for the numbers from 0 up to the size of the width, count
-  //create a table data element, give it an id of <the current count> then add it to the table row 
   for (let x = 0; x < WIDTH; x++) {
     const headCell = document.createElement("td");
     headCell.setAttribute("id", x);
     top.append(headCell);
   }
 
-  // append the previously created table row, with all its table data to the html board
   htmlBoard.append(top);
 
-  // TODO: add comment for this code
-  // for the numbers from 0 up to the size of the height, count (call it y)
-  //create a table row element then count again from 0 up to the size of the width (call it x)
-  //create a table data element, give it an id of the current y concat x count (creates coordinates)
-  //add the table data element to the tr, after all table data and rows have been created 
-  //add them to the html board 
   for (let y = 0; y < HEIGHT; y++) {
     const row = document.createElement("tr");
     for (let x = 0; x < WIDTH; x++) {
@@ -94,78 +65,58 @@ const makeHtmlBoard = () => {
 
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 const findSpotForCol = (x) => {
-  if (x > HEIGHT) { return null }
-  // TODO: write the real version of this, rather than always returning 0
-
-  let tableRows = document.querySelectorAll("#board tr");
-  for (let i = 0; HEIGHT - i > 0; i++) {
-    if (tableRows[HEIGHT - i].children[x].innerHTML == '') {
-      return HEIGHT - i - 1;
-    }
+  for (let y = HEIGHT - 1; y >= 0; y--) {
+    if (board[y][x] == undefined) { return y }
   }
   return null;
 }
 
-/** placeInTable: update DOM to place piece into HTML table of board */
+
 const placeInTable = (y, x) => {
-  // TODO: make a div and insert into correct table cell
   let token = document.createElement("div");
-  token.setAttribute("class", `player${currPlayer} piece`);
   let destination = document.getElementById(`${y}-${x}`);
 
+  token.setAttribute("class", `player${currPlayer} piece`);
   destination.append(token);
+
   setTimeout(() => {
     token.classList.toggle("drop")
   }, 10)
 
 }
 
-/** endGame: announce game end */
 
-function endGame(msg) {
+function endOfGameAlert(msg) {
   // TODO: pop up alert message
   setTimeout(() => {
     alert(msg)
   }, 900)
-
-
 }
 
-/** handleClick: handle click of column top to play piece */
 
 function handleClick(evt) {
-  // get x from ID of clicked cell
   let x = +evt.target.id;
 
-  // get next spot in column (if none, ignore click)
   let y = findSpotForCol(x);
   if (y === null) {
     alert(`column is full, you can not play there, try again! `)
     return;
   }
 
-  // place piece in board and add to HTML table
-  // TODO: add line to update in-memory board
+  board[y][x] = currPlayer;
   placeInTable(y, x);
-  board[y][x] = currPlayer
 
-  // check for win
   if (checkForWin()) {
     let winningDiv = document.createElement('div');
     winningDiv.classList.add("endGameDiv")
-    document.querySelector('body').append(winningDiv)
+    document.querySelector('body').append(winningDiv);
 
-    let firstChip = document.getElementById(`${winningCells[0][0]}-${winningCells[0][1]}`)
-    let secondChip = document.getElementById(`${winningCells[1][0]}-${winningCells[1][1]}`)
-    let thirdChip = document.getElementById(`${winningCells[2][0]}-${winningCells[2][1]}`)
-    let forthChip = document.getElementById(`${winningCells[3][0]}-${winningCells[3][1]}`)
-    const blink = setInterval(() => {
-      firstChip.classList.toggle('winning-chips')
-      secondChip.classList.toggle('winning-chips')
-      thirdChip.classList.toggle('winning-chips')
-      forthChip.classList.toggle('winning-chips')
-
-    }, 500);
+    winningCells.forEach((cell) => {
+      let [y, x] = cell;
+      setInterval(() => {
+        document.getElementById(`${y}-${x}`).classList.toggle('winning-chips')
+      }, 500);
+    })
 
     let restartButton = document.createElement('button');
     restartButton.innerText = "RESTART"
@@ -175,25 +126,16 @@ function handleClick(evt) {
       restart();
     })
 
-    return endGame(`Player ${currPlayer} won!`);
+    return endOfGameAlert(`Player ${currPlayer} won!`);
   }
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
   // don't actually have to check ALL cells, just cells in the top row
-  if (checkForTie()) {
-    return endGame(`it's a tie!`);
-  }
+  if (checkForTie()) { return endOfGameAlert(`it's a tie!`); }
 
-  // switch players
-  // TODO: switch currPlayer 1 <-> 2
-  //We already have an alert set up for an invalid play, 
-  //so if we reach this part in the function just need to focus on switching players
-  if (currPlayer == 1) {
-    currPlayer = 2
-  } else {
-    currPlayer = 1
-  }
+
+  currPlayer == 1 ? currPlayer = 2 : currPlayer = 1
   upDatePlayer(currPlayer)
 }
 
@@ -272,6 +214,12 @@ const breakBoardDown = () => {
 
 
 const restart = () => {
+  var highestTimeoutId = setTimeout(";");
+  for (var i = 0; i < highestTimeoutId; i++) {
+    clearTimeout(i);
+  }
+
+
   breakBoardDown(); // completely break down old game and pieces
   makeHtmlBoard(); // remake the visual board
   makeBoard(); //reset array grid monitoring pieces on the board

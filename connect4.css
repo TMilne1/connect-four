@@ -92,19 +92,7 @@ table {
   transform: translateY(00px);
 }
 
-.currentPlayer {
-  /*
-  position: absolute;
-  top: 100px;
-  right: 100px;
-  width: 220px;
-  height: 200px;
-  min-width: 220px;
-  min-height: 200px;
-  word-wrap: normal;
-  font-family: 'Bubblegum Sans', cursive;
-  text-align: center;
-  */
+#currentPlayer {
   margin: 10px;
 }
 
