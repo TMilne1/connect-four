@@ -23,7 +23,7 @@
   color: red;
   font-size: 7em;
   margin-left: -50px;
-  padding-left: -35px;
+ 
   top: 20px;
 }
 
@@ -85,7 +85,7 @@ table {
 #game {
   position: relative;
   top: 22vh;
-  max-height: fit-content;
+
 }
 
 .drop {
